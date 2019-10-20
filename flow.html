@@ -13,6 +13,8 @@
     <script src="rect.js"></script>
     <script src="circle.js"></script>
     <script src="dot.js"></script>
+    <script src="staticshape.js"></script>
+    <script src="grid.js"></script>
   </head>
   <body>
       <canvas id="id-canvas" width="700" height="600"></canvas>
@@ -21,9 +23,9 @@
               data-action='select_shape'
               width="130" height="90"></canvas> -->
       <div class="shape_pool" style="border:1px dashed black;">
-        <canvas width="60" height="60" data-action='change_active_shape' data-type='circle'></canvas>
-        <canvas width="60" height="60" data-action='change_active_shape' data-type='rectangle'></canvas>
-        <canvas width="60" height="60" data-action='change_active_shape' data-type='diamond'></canvas>
+        <canvas class='static_shape' width="60" height="60" data-action='change_active_shape' data-type='circle'></canvas>
+        <canvas class='static_shape' width="60" height="60" data-action='change_active_shape' data-type='rectangle'></canvas>
+        <canvas class='static_shape' width="60" height="60" data-action='change_active_shape' data-type='diamond'></canvas>
       </div>
       <button type="button" data-action="clear" id="clear-button">clear</button>
       <script>
@@ -47,20 +49,38 @@
           canvas_div.addEventListener('click', event => {
             var action = event.target.dataset.action
             var type = event.target.dataset.type
-
+            log(type)
             actions[action] && actions[action](type)
           })
         }
 
-        const initCanvas = () => {
+        const initStaticCanvas = () => {
           // 在shape_pool中画图形
+
+          // 读出所有canva，给每个canvas画出静态图
+          var staticShapes = es('.static_shape')
+          for (var i = 0; i < staticShapes.length; i++) {
+            var s = staticShapes[i]
+            var type = s.dataset.type
+
+            // 根据不同类型设置staticshape
+            var shape = StaticShape.new(s, type, 10, 10)
+            shape.draw()
+          }
         }
 
+
+
         var _main = function(){
+          initStaticCanvas()
+
           bindEvents()
 
-          canvas = new Canvas(canvas)
-          canvas.run()
+          var g = Grid.new(canvas, [5,0], [5,100])
+          g.draw()
+          //
+          // canvas = new Canvas(canvas)
+          // canvas.run()
         }
         _main()
       </script>

@@ -130,10 +130,9 @@ var circle = function(cvs, x, y){
 
     obj.ctx.beginPath()
     // x, y, radius, beginPI, endPI
-    obj.ctx.arc(obj.x1, obj.x2, obj.r, 0,2*Math.PI)
+    obj.ctx.arc(obj.x1, obj.y1, obj.r, 0,2*Math.PI)
     obj.ctx.stroke()
 
-    obj.ctx.stroke();
     // 激活的事情应该让 shape自己来做
     if (obj.mode == 'active'){
         // obj.dots.draw()

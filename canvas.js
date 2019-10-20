@@ -22,9 +22,12 @@ var Canvas = function(cvs){
   // 当前焦点
   obj.focus = null
 
+
+  // 拥有的元素，只要元素有draw和update就可以在这一层调用
+  // 什么类型都可以
+  
+
   // canvas 拥有事件注册
-
-
   obj.keyOptions = []
 
   obj.keydowns = {}
@@ -82,7 +85,6 @@ var Canvas = function(cvs){
     // 每次down发生的位置，用来做拖动相对坐标判断
     obj.mousedownInitX = x
     obj.mousedownInitY = y
-
 
     // 如果是焦点shape先获得，就使用焦点
     if (obj.focus && obj.focus.hasHit(x, y) == true){
