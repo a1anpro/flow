@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>flow</title>
+    <style media="screen">
+      canvas{
+        border: dashed 1px red;
+      }
+    </style>
+    <script src="canvas.js"></script>
+    <script src="utils.js"></script>
+    <script src="rect.js"></script>
+    <script src="circle.js"></script>
+    <script src="dot.js"></script>
+  </head>
+  <body>
+      <canvas id="id-canvas" width="700" height="600"></canvas>
+
+      <!-- <canvas id="id-shape-canvas"
+              data-action='select_shape'
+              width="130" height="90"></canvas> -->
+      <div class="shape_pool" style="border:1px dashed black;">
+        <canvas width="60" height="60" data-action='change_active_shape' data-type='circle'></canvas>
+        <canvas width="60" height="60" data-action='change_active_shape' data-type='rectangle'></canvas>
+        <canvas width="60" height="60" data-action='change_active_shape' data-type='diamond'></canvas>
+      </div>
+      <button type="button" data-action="clear" id="clear-button">clear</button>
+      <script>
+        var canvas = e('#id-canvas')
+        var context = canvas.getContext('2d')
+
+        var clear_button = e('#clear-button')
+        clear_button.addEventListener('click', function(event){
+          // context.clearRect(0,0, canvas.width, canvas.height)
+          canvas = null
+        })
+
+        const actions = {
+          change_active_shape(type){
+            window.type = type
+          }
+        }
+
+        const bindEvents = () => {
+          var canvas_div = e('.shape_pool')
+          canvas_div.addEventListener('click', event => {
+            var action = event.target.dataset.action
+            var type = event.target.dataset.type
+
+            actions[action] && actions[action](type)
+          })
+        }
+
+        const initCanvas = () => {
+          // 在shape_pool中画图形
+        }
+
+        var _main = function(){
+          bindEvents()
+
+          canvas = new Canvas(canvas)
+          canvas.run()
+        }
+        _main()
+      </script>
+  </body>
+
+</html>
